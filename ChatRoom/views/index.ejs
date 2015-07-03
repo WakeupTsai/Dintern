@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Room</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+      $( "#target" ).submit(function( event ) {
+        alert( "Handler for .submit() called." );
+        event.preventDefault();
+      });
+    </script>
+
+    <form id="target" action="chatroom">
+      <input type="text" value="Anonymous" name="nickname">
+      <input type="submit" value="Submit">
+    </form>
+
+  </body>
+</html>
