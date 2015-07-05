@@ -3,9 +3,12 @@
 <head>
 	<title></title>
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript">
 		
 		var nickname = "";
+		var socket = io.connect();
+
 		$(function() {
   			function getParameterByName(name) {
 		    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -17,43 +20,47 @@
 			$('#displayMsg').text('hello, ' + nickname + '!');
 
       	  	$('#btnSendMsg').click(function() {
-      	    	$.post('/receivemsg', {
-        	   		myMessage: $('#msg').val(),
-       	    	})
-            	.success(function(res) {
-            		console.log(res);
-            		$('#message').text($('#message').val()+'\n'+nickname+': ' + res);
-            		var scrollTop = $("#message")[0].scrollHeight;  
-                         $("#message").scrollTop(scrollTop); 
-            	})
+      	  		console.log("send data!");
+
+	        	socket.emit('client_data', {
+		            'msg': nickname+': '+$('#msg').val()
+		          });
+
+	        	$('#msg').val('');
         	});
 
         	$(document).ready(function(){
 			    $('#msg').keypress(function(e){
 			      	if(e.keyCode==13){
 			      		$('#btnSendMsg').click();
-			      		$('#msg').val('');
 			      	}
 			    });
 			});
+
+        	socket.on('message', function(data) {
+        		$('#message').text($('#message').val()+'\n'+ data.msg);
+             		var scrollTop = $("#message")[0].scrollHeight;  
+                          $("#message").scrollTop(scrollTop); 
+      		});
+
+
+
       	});
+
+		
+		
 
 	</script>
 </head>
 
 
 <body>
-
+	<div id="date"></div>
 	<div id="displayMsg"></div>	<textarea readonly="readonly"; onmouseover="this.focus();" style="BORDER-RIGHT: 2px dashed; BORDER-TOP: 2px dashed; OVERFLOW: auto; BORDER-LEFT: 2px dashed; BORDER-BOTTOM: 2px dashed;OVERFLOW: hidden; WIDTH: 1000px; COLOR: #999; HEIGHT: 300px" onfocus="this.select()"
 	id="message" >開始聊天吧！</textarea>
 	<input type-'text' size=100 id='msg'>
 
 	<button id="btnSendMsg">SEND</button>
-
-	<script type="text/javascript">
-
-    </script>
-
 
 </body>
 </html>

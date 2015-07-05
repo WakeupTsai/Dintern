@@ -3,6 +3,7 @@
   <head>
     <title>Chat Room</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   </head>
   <body>
@@ -12,12 +13,15 @@
         alert( "Handler for .submit() called." );
         event.preventDefault();
       });
+
+      var socket = io.connect();
+
     </script>
 
     <form id="target" action="chatroom">
       <input type="text" value="Anonymous" name="nickname">
       <input type="submit" value="Submit">
     </form>
-
+  
   </body>
 </html>
