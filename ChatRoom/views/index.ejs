@@ -8,16 +8,6 @@
   </head>
   <body>
 
-    <script type="text/javascript">
-      $( "#target" ).submit(function( event ) {
-        alert( "Handler for .submit() called." );
-        event.preventDefault();
-      });
-
-      var socket = io.connect();
-
-    </script>
-
     <form id="target" action="chatroom">
       <input type="text" value="Anonymous" name="nickname">
       <input type="submit" value="Submit">

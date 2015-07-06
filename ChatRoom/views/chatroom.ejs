@@ -43,6 +43,12 @@
                           $("#message").scrollTop(scrollTop); 
       		});
 
+      		socket.on('first', function(data){
+      			$('#message').text($('#message').val()+'\n'+ data.msg);
+      			var scrollTop = $("#message")[0].scrollHeight;  
+                          $("#message").scrollTop(scrollTop); 
+			});
+
 
 
       	});
@@ -56,8 +62,9 @@
 
 <body>
 	<div id="date"></div>
-	<div id="displayMsg"></div>	<textarea readonly="readonly"; onmouseover="this.focus();" style="BORDER-RIGHT: 2px dashed; BORDER-TOP: 2px dashed; OVERFLOW: auto; BORDER-LEFT: 2px dashed; BORDER-BOTTOM: 2px dashed;OVERFLOW: hidden; WIDTH: 1000px; COLOR: #999; HEIGHT: 300px" onfocus="this.select()"
-	id="message" >開始聊天吧！</textarea>
+	<div id="displayMsg"></div>	
+	<textarea readonly="readonly" style="BORDER-RIGHT: 2px dashed; BORDER-TOP: 2px dashed; OVERFLOW: auto; BORDER-LEFT: 2px dashed; BORDER-BOTTOM: 2px dashed; WIDTH: 1000px; COLOR: #999; HEIGHT: 300px;" onfocus="this.select()" 
+	id="message" ></textarea>
 	<input type-'text' size=100 id='msg'>
 
 	<button id="btnSendMsg">SEND</button>

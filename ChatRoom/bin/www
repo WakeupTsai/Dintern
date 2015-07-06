@@ -9,6 +9,26 @@ var debug = require('debug')('chat:server');
 var http = require('http');
 var io = require('socket.io'); // 加入 Socket.IO
 
+
+/**
+* Mongodb
+*/
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/chatroom');
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+
+var MessageSchema = new mongoose.Schema({
+    data:String
+});
+
+var MsgModel = db.model('Message',MessageSchema);
+var msgEntity = new MsgModel({data:'Database Connected!!!'});
+
+
 /**
  * Get port from environment and store in Express.
  */
@@ -38,16 +58,43 @@ var serv_io = io.listen(server);
 
 serv_io.sockets.on('connection', function(socket) {
 
+  MsgModel.findById("559a047b94b73278212a553a", function(err, p) {
+    if (!p)
+      console.log('Could not load Document');
+    else {
+      var allmsg="";
+      allmsg = p.data;
+      //console.log('allmsg='+allmsg);
+      socket.emit('first', {'msg': allmsg+'\n\n成功連線，開始聊天吧！'});
+    }
+  });
 
-    // 接收來自於瀏覽器的資料
+  
+
+  // 接收來自於瀏覽器的資料
+
   socket.on('client_data', function(data) {
-    //process.stdout.write(data.msg);
     console.log(data.msg);
-    //socket.emit('message', {'msg': data.msg});
-
     serv_io.sockets.emit('message', {'msg': data.msg});
 
+    MsgModel.findById("559a047b94b73278212a553a", function(err, p) {
+      if (!p)
+        console.log('Could not load Document');
+      else {
+        // do your updates here
+        p.data = p.data+"\n"+data.msg;
+
+        p.save(function(err) {
+          if (err)
+            console.log('error')
+          else
+            console.log('success')
+        });
+      }
+    });
+
   });
+
 
 });
 
