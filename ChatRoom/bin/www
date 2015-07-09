@@ -23,16 +23,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 var MessageSchema = new mongoose.Schema({data:String});
 var MsgModel = db.model('Message',MessageSchema);
 
-var msgEntity = new MsgModel({data:'Database!'});
+var msgEntity = new MsgModel({data:''});
 msgEntity.save();
 var entityId=msgEntity.id;
-
-/*MsgModel.find({}, function(err, docs) {
-    if (!err){ 
-        console.log(docs);
-        process.exit();
-    } else {throw err;}
-});*/
 
 /**
  * Get port from environment and store in Express.
@@ -70,7 +63,7 @@ serv_io.sockets.on('connection', function(socket) {
       var allmsg="";
       allmsg = p.data;
       //console.log('allmsg='+allmsg);
-      socket.emit('first', {'msg': allmsg+'\n【系統提示】成功連線，開始聊天吧！\n'});
+      socket.emit('message', {'msg': allmsg+'\n【系統提示】成功連線，開始聊天吧！\n'});
     }
   });
 
