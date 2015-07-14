@@ -17,6 +17,7 @@
 <body >
 	<div ng-app="chatApp" ng-controller="chatCtrl">
 
+		<!-- 登入介面 -->
 		<form class="form-inline text-center " ng-hide='startChat'>
 		 <br><br><br><br><br><br><br><br><br><br><br><br>
 		  <br>
@@ -30,7 +31,7 @@
 		  </button>
 		</form>
 
-
+		<!-- 聊天介面 -->
 		<form class="form-inline text-center " ng-show='startChat'>
 			<br><br>
 			<h2 >Hello, {{nickname }}</h2>
@@ -39,7 +40,6 @@
 			</textarea>
 			<input ng-model='msgInput' type='text' size=105 ng-keypress="pressEnter($event)" class="form-control">
 			<button ng-model='msgBtn' ng-click='sendMsg()' class="btn btn-default">SEND</button>
-			<!--<button ng-model='msgBtn' ng-click='startChat=false'>LogOut</button>-->
 		</form>
 	</div>
 
