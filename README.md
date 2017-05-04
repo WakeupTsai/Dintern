@@ -22,7 +22,8 @@ brew install node
 ### 執行Chatroom
 ```
 git clone https://github.com/WakeupTsai/Dintern.git
-cd Dintern/
+cd Dintern/ChatRoom
+npm install
 node bin/www
 # localhost:3000
 ```
